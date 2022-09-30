@@ -20,7 +20,8 @@ const connectToMongo = async () => {
 
 }
 
-
+const guitarRouter = require('./routes/guitar.route');
+app.use('/', guitarRouter); 
 
 connectToMongo(); 
 

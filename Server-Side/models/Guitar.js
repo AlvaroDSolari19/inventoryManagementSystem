@@ -7,7 +7,7 @@ const guitarSchema = new Schema({
     guitarColors: String, 
     isAcoustic: Boolean, 
     numberOfStrings: Number, 
-    dateAdded: Date
+    dateAdded: String
 });
 
 const Guitar = mongoose.model('Guitar', guitarSchema, 'Guitar');
