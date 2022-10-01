@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const guitarSchema = new Schema({
     brandName: String, 
     guitarModel: String, 
-    guitarColors: String, 
+    guitarColor: String, 
     isAcoustic: Boolean, 
     numberOfStrings: Number, 
     dateAdded: String

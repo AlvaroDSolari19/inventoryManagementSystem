@@ -12,10 +12,25 @@ const addGuitar = async (guitarToAdd) => {
 
 }
 
-const getAllGuitars = async() => {
+const getAllGuitars = async () => {
     const allGuitars = await Guitar.find(); 
     console.log('Inside getAllGuitars'); 
     return allGuitars; 
 }
 
-module.exports = { addGuitar, getAllGuitars }; 
+const updateGuitar = async (guitarID, updatedGuitar) => {
+    
+    try {
+        const newUpdatedGuitar = await Guitar.findByIdAndUpdate(guitarID, updatedGuitar);
+        return await Guitar.findById(guitarID); 
+    } catch (anError) { 
+        throw anError; 
+    }
+    
+}
+
+const deleteGuitar = async (guitarID) => { 
+    await Guitar.findByIdAndDelete(guitarID); 
+}
+
+module.exports = { addGuitar, getAllGuitars, updateGuitar, deleteGuitar }; 
