@@ -1,5 +1,16 @@
+import { useState } from 'react'; 
+
 export const GuitarForm = () => { 
+
+    const [guitarInformation, setGuitarInformation] = useState ({
+        guitarBrand: '', 
+        guitarModel: '', 
+        guitarColor: '', 
+        isAcoustic: false, 
+        numberOfStrings: 6
+    })
     
+    // Move this outside of GuitarForm ... Doesn't need to be exported 
     const generateCurrentDate = () => {
         const todaysDate = new Date(); 
         let [currentYear, currentMonth, currentDay] = [todaysDate.getFullYear(), todaysDate.getMonth() + 1, todaysDate.getDate()];
@@ -14,27 +25,36 @@ export const GuitarForm = () => {
 
         return (`${currentMonth}/${currentDay}/${currentYear}`);
     }
+
+    const handleSubmit = async (someEvent) => {
+        someEvent.preventDefault(); 
+        console.log(guitarInformation); 
+    }
     
     return (
-        <form action="">
+        <form action="" onSubmit={handleSubmit}>
 
-            <label htmlFor="">Brand: </label>
-            <input type="text" />
+            <label htmlFor="guitarBrand">Brand: </label>
+            <input type="text" id="guitarBrand" value={guitarInformation.guitarBrand} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarBrand: someEvent.target.value})}/>
 
-            <label htmlFor="">Model: </label>
-            <input type="text" />
+            <label htmlFor="guitarModel">Model: </label>
+            <input type="text" id="guitarModel" value={guitarInformation.guitarModel} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarModel: someEvent.target.value})}/>
 
-            <label htmlFor="">Color: </label>
-            <input type="text" />
+            <label htmlFor="guitarColor">Color: </label>
+            <input type="text" id="guitarModel" value={guitarInformation.guitarColor} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarColor: someEvent.target.value})} />
 
-            <label htmlFor="">Acoustic or Electric: </label>
-            <input type="text" />
+            <label htmlFor="">Acoustic? </label>
+            <input type="checkbox" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: !guitarInformation.isAcoustic})}/>
 
-            <label htmlFor="">Number of Strings: </label>
-            <input type="text" />
+            {/* ADD LOGIC AFTER MODIFYING SCHEMA */}
+            <label htmlFor="">Electric? </label>
+            <input type="checkbox" />
 
-            <label htmlFor="">Date: </label>
-            <input type="text" value={generateCurrentDate()} disabled/>
+            <label htmlFor="numberOfStrings">Number of Strings: </label>
+            <input type="number" id="numberOfStrings" value={guitarInformation.numberOfStrings} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, numberOfStrings: someEvent.target.value})}/>
+
+            <label htmlFor="currentDate">Date: </label>
+            <input type="text" id="currentDate" value={generateCurrentDate()} disabled/>
 
             <button type="reset">Clear</button>
             <button type="submit">Submit</button>

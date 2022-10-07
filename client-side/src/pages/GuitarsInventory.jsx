@@ -1,12 +1,27 @@
 import { useState } from 'react'; 
+import { GuitarList } from '../components/List/GuitarList'
 import { GuitarForm } from '../components/Form/GuitarForm'
 
 export const GuitarsInventory = () => {
 
-    const [displayForm, setDisplayForm] = useState(false); 
+    const [buttonsCondition, setButtonsCondition] = useState({
+        displayTable: false, 
+        displayFilter: false, 
+        displayAddForm: false 
+    }); 
 
-    const addButtonAction = () => {
-        setDisplayForm(true); 
+    const allGuitarsAction = () => {
+        setButtonsCondition( (buttonsCondition) => ({
+            ...buttonsCondition, 
+            displayTable: true
+        }))
+    }
+    
+    const addGuitarAction = () => {
+        setButtonsCondition( (buttonsCondition) => ({
+            ...buttonsCondition, 
+            displayAddForm: true
+        }))
     }
     
     return (
@@ -14,12 +29,13 @@ export const GuitarsInventory = () => {
             <h1>Guitars Inventory</h1>
 
             <div>
-                <button type="button">Get All Guitars</button>
+                <button type="button" onClick={allGuitarsAction}>Get All Guitars</button>
                 <button type="button">Get Guitar By Brand</button>
-                <button type="button" onClick={addButtonAction}>Add Guitar</button>
+                <button type="button" onClick={addGuitarAction}>Add Guitar</button>
             </div>
 
-            {displayForm && <GuitarForm />}
+            {buttonsCondition.displayAddForm && <GuitarForm />}
+            {buttonsCondition.displayTable && <GuitarList />}
         </>
     )
 }
