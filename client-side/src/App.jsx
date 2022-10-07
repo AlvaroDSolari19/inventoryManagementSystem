@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom' 
+import { Home, GuitarsInventory } from './pages'
+
 
 export const App = () => { 
     return (
@@ -6,11 +8,11 @@ export const App = () => {
         
             <Routes>
 
-                <Route path='/'></Route>
-                <Route path='/Guitars'></Route>
+                <Route path='/' element={<Home/>}></Route>
+                <Route path='/guitars' element={<GuitarsInventory/>}></Route>
 
             </Routes>
         
         </BrowserRouter>
     )
-}
+} 
