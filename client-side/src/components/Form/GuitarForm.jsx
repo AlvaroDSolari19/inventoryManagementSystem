@@ -6,15 +6,8 @@ import axios from 'axios';
 const generateCurrentDate = () => {
     const todaysDate = new Date(); 
     let [currentYear, currentMonth, currentDay] = [todaysDate.getFullYear(), todaysDate.getMonth() + 1, todaysDate.getDate()];
-    
-    if (currentMonth <= 9){
-        currentMonth = '0' + currentMonth; 
-    }
-
-    if (currentDay <= 9){
-        currentDay = '0' + currentDay; 
-    }
-
+    if (currentMonth <= 9) { currentMonth = '0' + currentMonth; }
+    if (currentDay <= 9) { currentDay = '0' + currentDay; }
     return (`${currentMonth}/${currentDay}/${currentYear}`);
 }
 
@@ -28,8 +21,21 @@ export const GuitarForm = () => {
         guitarColor: '', 
         isAcoustic: false, 
         isElectric: false, 
-        numberOfStrings: 6
+        numberOfStrings: 6,
+        dateAdded: generateCurrentDate()
     })
+
+    const handleClear = () => { 
+        setGuitarInformation({
+            guitarBrand: '', 
+            guitarModel: '', 
+            guitarColor: '', 
+            isAcoustic: false, 
+            isElectric: false, 
+            numberOfStrings: 6, 
+            dateAdded: generateCurrentDate()
+        })
+    }
 
     const handleSubmit = async (someEvent) => {
         someEvent.preventDefault(); 
@@ -42,9 +48,11 @@ export const GuitarForm = () => {
                 isAcoustic: guitarInformation.isAcoustic, 
                 isElectric: guitarInformation.isElectric, 
                 numberOfStrings: guitarInformation.numberOfStrings, 
-                dateAdded: generateCurrentDate()
+                dateAdded: guitarInformation.dateAdded
             });
 
+            someEvent.target.reset(); 
+            handleClear(); 
             navigateTo('/guitars');
 
         } catch (anError) { 
@@ -74,9 +82,9 @@ export const GuitarForm = () => {
             <input type="number" id="numberOfStrings" value={guitarInformation.numberOfStrings} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, numberOfStrings: someEvent.target.value})}/>
 
             <label htmlFor="currentDate">Date: </label>
-            <input type="text" id="currentDate" value={generateCurrentDate()} disabled/>
+            <input type="text" id="currentDate" value={guitarInformation.dateAdded} disabled/>
 
-            <button type="reset">Clear</button>
+            <button type="reset" onClick={handleClear}>Clear</button>
             <button type="submit">Submit</button>
 
         </form>
