@@ -6,6 +6,7 @@ const guitarSchema = new Schema({
     guitarModel: String, 
     guitarColor: String, 
     isAcoustic: Boolean, 
+    isElectric: Boolean, 
     numberOfStrings: Number, 
     dateAdded: String
 });

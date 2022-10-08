@@ -1,34 +1,55 @@
 import { useState } from 'react'; 
+import { useNavigate } from 'react-router-dom'
+
+import axios from 'axios'; 
+
+const generateCurrentDate = () => {
+    const todaysDate = new Date(); 
+    let [currentYear, currentMonth, currentDay] = [todaysDate.getFullYear(), todaysDate.getMonth() + 1, todaysDate.getDate()];
+    
+    if (currentMonth <= 9){
+        currentMonth = '0' + currentMonth; 
+    }
+
+    if (currentDay <= 9){
+        currentDay = '0' + currentDay; 
+    }
+
+    return (`${currentMonth}/${currentDay}/${currentYear}`);
+}
 
 export const GuitarForm = () => { 
+
+    const navigateTo = useNavigate(); 
 
     const [guitarInformation, setGuitarInformation] = useState ({
         guitarBrand: '', 
         guitarModel: '', 
         guitarColor: '', 
         isAcoustic: false, 
+        isElectric: false, 
         numberOfStrings: 6
     })
-    
-    // Move this outside of GuitarForm ... Doesn't need to be exported 
-    const generateCurrentDate = () => {
-        const todaysDate = new Date(); 
-        let [currentYear, currentMonth, currentDay] = [todaysDate.getFullYear(), todaysDate.getMonth() + 1, todaysDate.getDate()];
-        
-        if(currentMonth <= 9){
-            currentMonth = '0' + currentMonth; 
-        }
-
-        if(currentDay <= 9){
-            currentDay = '0' + currentDay; 
-        }
-
-        return (`${currentMonth}/${currentDay}/${currentYear}`);
-    }
 
     const handleSubmit = async (someEvent) => {
         someEvent.preventDefault(); 
-        console.log(guitarInformation); 
+
+        try {
+            await axios.post('http://localhost:9000/', {
+                brandName: guitarInformation.guitarBrand,
+                guitarModel: guitarInformation.guitarModel, 
+                guitarColor: guitarInformation.guitarColor, 
+                isAcoustic: guitarInformation.isAcoustic, 
+                isElectric: guitarInformation.isElectric, 
+                numberOfStrings: guitarInformation.numberOfStrings, 
+                dateAdded: generateCurrentDate()
+            });
+
+            navigateTo('/guitars');
+
+        } catch (anError) { 
+            console.error(anError);
+        }
     }
     
     return (
@@ -46,9 +67,8 @@ export const GuitarForm = () => {
             <label htmlFor="">Acoustic? </label>
             <input type="checkbox" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: !guitarInformation.isAcoustic})}/>
 
-            {/* ADD LOGIC AFTER MODIFYING SCHEMA */}
             <label htmlFor="">Electric? </label>
-            <input type="checkbox" />
+            <input type="checkbox" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isElectric: !guitarInformation.isElectric})}/>
 
             <label htmlFor="numberOfStrings">Number of Strings: </label>
             <input type="number" id="numberOfStrings" value={guitarInformation.numberOfStrings} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, numberOfStrings: someEvent.target.value})}/>
@@ -58,7 +78,6 @@ export const GuitarForm = () => {
 
             <button type="reset">Clear</button>
             <button type="submit">Submit</button>
-
 
         </form>
     )

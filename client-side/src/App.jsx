@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom' 
 import { Home, GuitarsInventory } from './pages'
+import { GuitarForm } from './components/Form/GuitarForm'
 
 
 export const App = () => { 
@@ -10,6 +11,7 @@ export const App = () => {
 
                 <Route path='/' element={<Home/>}></Route>
                 <Route path='/guitars' element={<GuitarsInventory/>}></Route>
+                <Route path='/guitars/new' element={<GuitarForm/>}></Route>
 
             </Routes>
         
