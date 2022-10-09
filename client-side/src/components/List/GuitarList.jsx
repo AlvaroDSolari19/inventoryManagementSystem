@@ -1,26 +1,6 @@
 import axios from 'axios'; 
 import { useState, useEffect } from 'react'; 
 
-
-
-const Guitar = ({someGuitar}) => {
-    return (
-        <>
-            <tr>
-                <td>{someGuitar.brandName}</td>
-                <td>{someGuitar.guitarModel}</td>
-                <td>{someGuitar.guitarColor}</td>
-                <td>{someGuitar.isAcoustic ? 'Yes' : 'No'}</td>
-                <td>{someGuitar.isElectric ? 'Yes' : 'No'}</td>
-                <td>{someGuitar.numberOfStrings}</td>
-                <td>{someGuitar.dateAdded}</td>
-                <td><button type="button">Update</button></td>
-                <td><button type="button">Delete</button></td>
-            </tr>
-        </>
-    )
-}
-
 export const GuitarList = () => { 
     
     const [guitarList, setGuitarList] = useState([]); 
@@ -32,6 +12,34 @@ export const GuitarList = () => {
             })
             .catch( (anError) => console.error(anError))
     }, [])
+
+    const Guitar = ({someGuitar}) => {
+        return (
+            <>
+                <tr>
+                    <td>{someGuitar.brandName}</td>
+                    <td>{someGuitar.guitarModel}</td>
+                    <td>{someGuitar.guitarColor}</td>
+                    <td>{someGuitar.isAcoustic ? 'Yes' : 'No'}</td>
+                    <td>{someGuitar.isElectric ? 'Yes' : 'No'}</td>
+                    <td>{someGuitar.numberOfStrings}</td>
+                    <td>{someGuitar.dateAdded}</td>
+                    <td><button type="button">Update</button></td>
+                    <td><button type="button" onClick={ (someEvent) => handleDelete(someGuitar._id, guitarList)}>Delete</button></td>
+                </tr>
+            </>
+        )
+    }
+
+    const handleDelete = (guitarID, guitarList) => {
+        //console.log(`Deleting item with an ID of ${guitarID}`)
+        const matchingGuitarIndex = guitarList.findIndex( (currentGuitar) => currentGuitar._id === guitarID)
+        //console.log(`Index was ${matchingGuitarIndex}`);
+        guitarList.splice(matchingGuitarIndex, 1);
+        const updatedGuitarList = [...guitarList]
+        setGuitarList(updatedGuitarList); 
+    }
+    
     
     return (
         <>
