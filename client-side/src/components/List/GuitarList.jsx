@@ -1,5 +1,6 @@
 import axios from 'axios'; 
 import { useState, useEffect } from 'react'; 
+import { Link } from 'react-router-dom'
 
 export const GuitarList = () => { 
     
@@ -32,7 +33,7 @@ export const GuitarList = () => {
                     <td>{someGuitar.isElectric ? 'Yes' : 'No'}</td>
                     <td>{someGuitar.numberOfStrings}</td>
                     <td>{someGuitar.dateAdded}</td>
-                    <td><button type="button">Update</button></td>
+                    <td><button type="button"><Link to={'/guitars/edit/' + someGuitar._id} state={someGuitar}>Update</Link></button></td>
                     <td><button type="button" onClick={ (someEvent) => handleDelete(someGuitar._id, guitarList)}>Delete</button></td>
                 </tr>
             </>
