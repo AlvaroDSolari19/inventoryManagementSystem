@@ -13,6 +13,14 @@ export const GuitarList = () => {
             .catch( (anError) => console.error(anError))
     }, [])
 
+    const handleDelete = (guitarID, guitarList) => {
+        axios.delete('http://localhost:9000/' + guitarID);
+        const matchingGuitarIndex = guitarList.findIndex( (currentGuitar) => currentGuitar._id === guitarID)
+        guitarList.splice(matchingGuitarIndex, 1);
+        const updatedGuitarList = [...guitarList]
+        setGuitarList(updatedGuitarList); 
+    }
+
     const Guitar = ({someGuitar}) => {
         return (
             <>
@@ -30,16 +38,6 @@ export const GuitarList = () => {
             </>
         )
     }
-
-    const handleDelete = (guitarID, guitarList) => {
-        //console.log(`Deleting item with an ID of ${guitarID}`)
-        const matchingGuitarIndex = guitarList.findIndex( (currentGuitar) => currentGuitar._id === guitarID)
-        //console.log(`Index was ${matchingGuitarIndex}`);
-        guitarList.splice(matchingGuitarIndex, 1);
-        const updatedGuitarList = [...guitarList]
-        setGuitarList(updatedGuitarList); 
-    }
-    
     
     return (
         <>
