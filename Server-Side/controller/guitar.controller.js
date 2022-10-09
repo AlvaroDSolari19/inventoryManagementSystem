@@ -14,7 +14,6 @@ const addGuitar = async (guitarToAdd) => {
 
 const getAllGuitars = async () => {
     const allGuitars = await Guitar.find(); 
-    console.log('Inside getAllGuitars'); 
     return allGuitars; 
 }
 
