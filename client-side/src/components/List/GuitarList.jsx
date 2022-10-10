@@ -1,10 +1,13 @@
 import axios from 'axios'; 
 import { useState, useEffect } from 'react'; 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-export const GuitarList = () => { 
+export const GuitarList = ({maxCapacity}) => { 
     
+    const navgiateTo = useNavigate(); 
     const [guitarList, setGuitarList] = useState([]); 
+    
+    
 
     useEffect( () => {
         axios.get('http://localhost:9000/')
@@ -20,6 +23,10 @@ export const GuitarList = () => {
         guitarList.splice(matchingGuitarIndex, 1);
         const updatedGuitarList = [...guitarList]
         setGuitarList(updatedGuitarList); 
+    }
+
+    const handleAddButton = () => { 
+        navgiateTo(`/guitars/new?capacity=${maxCapacity}`)
     }
 
     const Guitar = ({someGuitar}) => {
@@ -39,9 +46,12 @@ export const GuitarList = () => {
             </>
         )
     }
-    
+
     return (
         <>
+            { (guitarList.length < maxCapacity) ? 
+                <button type="button" onClick={handleAddButton}>Add Guitar</button> : 
+                <p>You cannot add more guitars because you have reached the maximum capacity. </p>}
             <table>
                 <thead>
                     <tr>

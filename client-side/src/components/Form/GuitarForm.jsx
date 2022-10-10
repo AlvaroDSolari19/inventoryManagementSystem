@@ -1,5 +1,5 @@
 import { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import axios from 'axios'; 
 
@@ -14,6 +14,8 @@ const generateCurrentDate = () => {
 export const GuitarForm = () => { 
 
     const navigateTo = useNavigate(); 
+    const [searchParams] = useSearchParams(); 
+    const maxCapacity = searchParams.get('capacity'); 
 
     const [guitarInformation, setGuitarInformation] = useState ({
         guitarBrand: '', 
@@ -53,7 +55,7 @@ export const GuitarForm = () => {
 
             someEvent.target.reset(); 
             handleClear(); 
-            navigateTo('/guitars');
+            navigateTo(`/guitars?capacity=${maxCapacity}`);
 
         } catch (anError) { 
             console.error(anError);

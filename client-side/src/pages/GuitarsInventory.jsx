@@ -1,19 +1,15 @@
-//import { useState } from 'react'; 
-import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { GuitarList } from '../components/List/GuitarList'
-
-
 
 export const GuitarsInventory = () => {
     
+    const [searchParams] = useSearchParams(); 
+    const maxCapacity = searchParams.get('capacity');
+
     return (
         <>
             <h1>Guitars Inventory</h1>
-
-            <button type="button"><Link to={'/guitars/new'}>Add Guitar</Link></button>
-
-            <GuitarList /> 
-
+            <GuitarList maxCapacity={maxCapacity} /> 
 
         </>
     )
