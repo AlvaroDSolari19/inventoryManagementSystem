@@ -1,5 +1,9 @@
 import { useState } from 'react'; 
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 import axios from 'axios'; 
 
@@ -63,32 +67,52 @@ export const GuitarForm = () => {
     }
     
     return (
-        <form action="" onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
 
-            <label htmlFor="guitarBrand">Brand: </label>
-            <input type="text" id="guitarBrand" value={guitarInformation.guitarBrand} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarBrand: someEvent.target.value})}/>
+            <Form.Group>
+                <Form.Label htmlFor="guitarBrand">Brand: </Form.Label>
+                <Form.Control type="text" id="guitarBrand" value={guitarInformation.guitarBrand} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarBrand: someEvent.target.value})}/>
+            </Form.Group>
 
-            <label htmlFor="guitarModel">Model: </label>
-            <input type="text" id="guitarModel" value={guitarInformation.guitarModel} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarModel: someEvent.target.value})}/>
+            <Form.Group>
+                <Form.Label htmlFor="guitarModel">Model: </Form.Label>
+                <Form.Control type="text" id="guitarModel" value={guitarInformation.guitarModel} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarModel: someEvent.target.value})}/>
+            </Form.Group>
 
-            <label htmlFor="guitarColor">Color: </label>
-            <input type="text" id="guitarModel" value={guitarInformation.guitarColor} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarColor: someEvent.target.value})} />
+            <Form.Group>
+                <Form.Label htmlFor="guitarColor">Color: </Form.Label>
+                <Form.Control type="text" id="guitarModel" value={guitarInformation.guitarColor} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarColor: someEvent.target.value})} />
+            </Form.Group>
 
-            <label htmlFor="">Acoustic? </label>
-            <input type="checkbox" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: !guitarInformation.isAcoustic})}/>
+            
+            <Row>
+                <Form.Group as={Col}>
+                    <Form.Label>Guitar Type: </Form.Label>
+                </Form.Group>
 
-            <label htmlFor="">Electric? </label>
-            <input type="checkbox" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isElectric: !guitarInformation.isElectric})}/>
+                <Form.Group as={Col}>
+                    {/*<input type="checkbox" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: !guitarInformation.isAcoustic})}/>*/}
+                    <Form.Check type="checkbox" label="Acoustic" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: !guitarInformation.isAcoustic})}/>
+                </Form.Group>
+    
+                <Form.Group as={Col}>
+                    <Form.Check type="checkbox" label="Electric" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isElectric: !guitarInformation.isElectric})}/>
+                </Form.Group>
+            </Row>
 
-            <label htmlFor="numberOfStrings">Number of Strings: </label>
-            <input type="number" id="numberOfStrings" value={guitarInformation.numberOfStrings} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, numberOfStrings: someEvent.target.value})}/>
+            <Form.Group>
+                <Form.Label htmlFor="numberOfStrings">Number of Strings: </Form.Label>
+                <Form.Control type="number" id="numberOfStrings" value={guitarInformation.numberOfStrings} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, numberOfStrings: someEvent.target.value})}/>
+            </Form.Group>
 
-            <label htmlFor="currentDate">Date: </label>
-            <input type="text" id="currentDate" value={guitarInformation.dateAdded} disabled/>
+            <Form.Group>
+                <Form.Label htmlFor="currentDate">Date: </Form.Label>
+                <Form.Control type="text" id="currentDate" value={guitarInformation.dateAdded} disabled/>
+            </Form.Group>
 
-            <button type="reset" onClick={handleClear}>Clear</button>
-            <button type="submit">Submit</button>
+            <Button className="finalButtons" type="reset" variant="light" onClick={handleClear}>Clear</Button>
+            <Button className="finalButtons" type="submit" variant="success">Submit</Button>
 
-        </form>
+        </Form>
     )
 }
