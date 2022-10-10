@@ -1,0 +1,14 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.mainTitle{
+    text-align: center; 
+}
+
+.formContainer{
+    margin: 1% auto 0; 
+    width: 50%; 
+}
+
+.finalButtons{
+    margin-top: 10px; 
+}

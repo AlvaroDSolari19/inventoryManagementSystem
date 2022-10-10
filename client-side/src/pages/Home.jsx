@@ -1,10 +1,12 @@
 import { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 export const Home = () => {
 
     const navigateTo = useNavigate(); 
-    const [maxCapacity, setMaxCapacity] = useState(0);  
+    const [maxCapacity, setMaxCapacity] = useState(5);  
 
     const handleSubmit = (someEvent) => {
         someEvent.preventDefault();  
@@ -12,17 +14,19 @@ export const Home = () => {
     }
 
     return (
-        <>
-            <h1>Warehouse Settings</h1>
+        <div className="formContainer">
+            <h1 className="mainTitle">Warehouse Settings</h1>
             
-            <form action="" onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
 
-                <label htmlFor="">Max Capacity: </label>
-                <input type="number" value={maxCapacity} onChange={ (someEvent) => setMaxCapacity(someEvent.target.value)} min="0"/>
+                <Form.Group>
+                    <Form.Label htmlFor=""> Maximum Capacity: </Form.Label>
+                    <Form.Control type="number" value={maxCapacity} onChange={ (someEvent) => setMaxCapacity(someEvent.target.value)} min="0"/>
+                </Form.Group>
 
-                <button type="submit">Proceed</button>
+                <Button className="finalButtons" variant='success' type="submit">Proceed</Button>
 
-            </form>
-        </>
+            </Form>
+        </div>
     );
 }

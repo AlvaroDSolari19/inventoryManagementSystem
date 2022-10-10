@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Home, GuitarsInventory } from './pages'
 import { GuitarForm } from './components/Form/GuitarForm'
 import { UpdateForm } from './components/Form/UpdateForm'
+import './index.css'
 
 export const App = () => { 
     return (
