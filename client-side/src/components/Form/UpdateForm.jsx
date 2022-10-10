@@ -92,7 +92,7 @@ export const UpdateForm = () => {
                 <Form.Control type="text" id="currentDate" value={guitarInformation.dateAdded} disabled/>
             </Form.Group>
 
-            <Button className="finalButtons" type="reset" variant="danger" onClick={handleCancel}>Cancel</Button>
+            <Button className="finalButtons" type="button" variant="danger" onClick={handleCancel}>Cancel</Button>
             <Button className="finalButtons" type="submit" variant="success">Submit</Button>
 
         </Form>

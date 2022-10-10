@@ -1,6 +1,8 @@
 import axios from 'axios'; 
 import { useState, useEffect } from 'react'; 
 import { Link, useNavigate } from 'react-router-dom'
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 
 export const GuitarList = ({maxCapacity}) => { 
     
@@ -40,8 +42,10 @@ export const GuitarList = ({maxCapacity}) => {
                     <td>{someGuitar.isElectric ? 'Yes' : 'No'}</td>
                     <td>{someGuitar.numberOfStrings}</td>
                     <td>{someGuitar.dateAdded}</td>
-                    <td><button type="button"><Link to={'/guitars/edit/' + someGuitar._id + '?capacity=5'} state={someGuitar}>Update</Link></button></td>
-                    <td><button type="button" onClick={ (someEvent) => handleDelete(someGuitar._id, guitarList)}>Delete</button></td>
+                    <td>
+                        <Button className="optionsButtons" type="button" variant="warning"><Link to={'/guitars/edit/' + someGuitar._id + '?capacity=5'} state={someGuitar}>Update</Link></Button>
+                        <Button className="optionsButtons" type="button" variant="danger" onClick={ (someEvent) => handleDelete(someGuitar._id, guitarList)}>Delete</Button>
+                    </td>
                 </tr>
             </>
         )
@@ -49,25 +53,29 @@ export const GuitarList = ({maxCapacity}) => {
 
     return (
         <>
-            { (guitarList.length < maxCapacity) ? 
-                <button type="button" onClick={handleAddButton}>Add Guitar</button> : 
-                <p>You cannot add more guitars because you have reached the maximum capacity. </p>}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Brand</th>
-                        <th>Model</th>
-                        <th>Color</th>
-                        <th>Acoustic?</th>
-                        <th>Electric?</th>
-                        <th>Number of Strings</th>
-                        <th>Date Added</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {guitarList.map( (currentGuitar) => <Guitar key={currentGuitar._id} someGuitar={currentGuitar}/>)}
-                </tbody>
-            </table>
+            <div className="mainContainer">
+                <h1 className='mainTitle'>Guitars Inventory</h1>
+                {(guitarList.length < maxCapacity) ? <Button type="button" variant="success" onClick={handleAddButton}>Add Guitar</Button> : <p>You cannot add more guitars because you have reached the maximum capacity.</p>}
+            </div>
+            <div className="tableContainer">
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Color</th>
+                            <th>Acoustic</th>
+                            <th>Electric</th>
+                            <th>Number of Strings</th>
+                            <th>Date Added</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {guitarList.map( (currentGuitar) => <Guitar key={currentGuitar._id} someGuitar={currentGuitar}/>)}
+                    </tbody>
+                </Table>
+            </div>
         </>
     )
 }

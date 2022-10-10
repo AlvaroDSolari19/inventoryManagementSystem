@@ -7,10 +7,8 @@ export const GuitarsInventory = () => {
     const maxCapacity = searchParams.get('capacity');
 
     return (
-        <>
-            <h1>Guitars Inventory</h1>
-            <GuitarList maxCapacity={maxCapacity} /> 
-
-        </>
+        <div>
+            <GuitarList maxCapacity={maxCapacity} />
+        </div>
     )
 }
