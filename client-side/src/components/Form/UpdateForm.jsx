@@ -1,11 +1,18 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'; 
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'; 
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 export const UpdateForm = () => { 
 
     const currentGuitar = useLocation().state; 
     const navigateTo = useNavigate(); 
+    const [searchParams] = useSearchParams(); 
+    const maxCapacity = searchParams.get('capacity'); 
+
     const [guitarInformation, setGuitarInformation] = useState({
         guitarBrand: currentGuitar.brandName, 
         guitarModel: currentGuitar.guitarModel, 
@@ -17,7 +24,7 @@ export const UpdateForm = () => {
     })
 
     const handleCancel = () => {
-        navigateTo('/guitars');
+        navigateTo(`/guitars?capacity=${maxCapacity}`);
     }
 
 
@@ -25,7 +32,7 @@ export const UpdateForm = () => {
         someEvent.preventDefault(); 
     
         await axios.put('http://localhost:9000/' + currentGuitar._id, {
-            brandName: guitarInformation.brandName, 
+            brandName: guitarInformation.guitarBrand, 
             guitarModel: guitarInformation.guitarModel, 
             guitarColor: guitarInformation.guitarColor, 
             isAcoustic: guitarInformation.isAcoustic, 
@@ -34,42 +41,60 @@ export const UpdateForm = () => {
             dateAdded: guitarInformation.dateAdded
         });
 
-        navigateTo('/guitars');
+        navigateTo(`/guitars?capacity=${maxCapacity}`);
     }
-    
+
     return (
-        <form action="" onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
 
-            <label htmlFor="guitarBrand">Brand: </label>
-            <input type="text" id="guitarBrand" value={guitarInformation.guitarBrand} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarBrand: someEvent.target.value})}/>
+            <Form.Group>
+                <Form.Label htmlFor="guitarBrand">Brand: </Form.Label>
+                <Form.Control type="text" id="guitarBrand" value={guitarInformation.guitarBrand} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarBrand: someEvent.target.value})}/>
+            </Form.Group>
 
-            <label htmlFor="guitarModel">Model: </label>
-            <input type="text" id="guitarModel" value={guitarInformation.guitarModel} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarModel: someEvent.target.value})}/>
+            <Form.Group>
+                <Form.Label htmlFor="guitarModel">Model: </Form.Label>
+                <Form.Control type="text" id="guitarModel" value={guitarInformation.guitarModel} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarModel: someEvent.target.value})}/>
+            </Form.Group>
 
-            <label htmlFor="guitarColor">Color: </label>
-            <input type="text" id="guitarColor" value={guitarInformation.guitarColor} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarColor: someEvent.target.value})}/>
+            <Form.Group>
+                <Form.Label htmlFor="guitarColor">Color: </Form.Label>
+                <Form.Control type="text" id="guitarModel" value={guitarInformation.guitarColor} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, guitarColor: someEvent.target.value})} />
+            </Form.Group>
 
-            <label htmlFor="isAcoustic">Acoustic? </label>
-            <select name="" id="isAcoustic" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: someEvent.target.value})}>
-                <option value={guitarInformation.isAcoustic}>{guitarInformation.isAcoustic ? 'Yes' : 'No'}</option>
-                <option value={!guitarInformation.isAcoustic}>{!guitarInformation.isAcoustic ? 'Yes' : 'No'}</option>
-            </select>
+            
+            <Row>
 
-            <label htmlFor="isElectric">Electric? </label>
-            <select name="" id="isElectric" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isElectric: someEvent.target.value})}>
-                <option value={guitarInformation.isElectric}>{guitarInformation.isElectric ? 'Yes' : 'No'}</option>
-                <option value={!guitarInformation.isElectric}>{!guitarInformation.isElectric ? 'Yes' : 'No'}</option>
-            </select>
+                <Form.Group as={Col}>
+                    <Form.Label htmlFor="guitarColor">Acoustic? </Form.Label>                    
+                    <Form.Select onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: someEvent.target.value})}>
+                        <option value={guitarInformation.isAcoustic}>{guitarInformation.isAcoustic ? 'Yes' : 'No'}</option>
+                        <option value={!guitarInformation.isAcoustic}>{!guitarInformation.isAcoustic ? 'Yes' : 'No'}</option>
+                    </Form.Select>
+                </Form.Group>
+    
+                <Form.Group as={Col}>
+                    <Form.Label htmlFor="guitarColor">Electric? </Form.Label>                    
+                    <Form.Select onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isElectric: someEvent.target.value})}>
+                        <option value={guitarInformation.isElectric}>{guitarInformation.isElectric ? 'Yes' : 'No'}</option>
+                        <option value={!guitarInformation.isElectric}>{!guitarInformation.isElectric ? 'Yes' : 'No'}</option>
+                    </Form.Select>
+                </Form.Group>
+            </Row>
 
-            <label htmlFor="numberOfStrings">Number of Strings: </label>
-            <input type="number" id="numberOfStrings" value={guitarInformation.numberOfStrings} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, numberOfStrings: someEvent.target.value})}/>
+            <Form.Group>
+                <Form.Label htmlFor="numberOfStrings">Number of Strings: </Form.Label>
+                <Form.Control type="number" id="numberOfStrings" value={guitarInformation.numberOfStrings} onChange={ (someEvent) => setGuitarInformation({...guitarInformation, numberOfStrings: someEvent.target.value})}/>
+            </Form.Group>
 
-            <label htmlFor="dateAdded">Date Added: </label>
-            <input type="text" id="dateAdded" value={guitarInformation.dateAdded} disabled/>
+            <Form.Group>
+                <Form.Label htmlFor="currentDate">Date: </Form.Label>
+                <Form.Control type="text" id="currentDate" value={guitarInformation.dateAdded} disabled/>
+            </Form.Group>
 
-            <button type="button" onClick={handleCancel}>Cancel</button>
-            <button type="submit">Update</button>
+            <Button className="finalButtons" type="reset" variant="danger" onClick={handleCancel}>Cancel</Button>
+            <Button className="finalButtons" type="submit" variant="success">Submit</Button>
 
-        </form>
+        </Form>
     )
 }

@@ -91,7 +91,6 @@ export const GuitarForm = () => {
                 </Form.Group>
 
                 <Form.Group as={Col}>
-                    {/*<input type="checkbox" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: !guitarInformation.isAcoustic})}/>*/}
                     <Form.Check type="checkbox" label="Acoustic" onChange={ (someEvent) => setGuitarInformation({...guitarInformation, isAcoustic: !guitarInformation.isAcoustic})}/>
                 </Form.Group>
     

@@ -40,7 +40,7 @@ export const GuitarList = ({maxCapacity}) => {
                     <td>{someGuitar.isElectric ? 'Yes' : 'No'}</td>
                     <td>{someGuitar.numberOfStrings}</td>
                     <td>{someGuitar.dateAdded}</td>
-                    <td><button type="button"><Link to={'/guitars/edit/' + someGuitar._id} state={someGuitar}>Update</Link></button></td>
+                    <td><button type="button"><Link to={'/guitars/edit/' + someGuitar._id + '?capacity=5'} state={someGuitar}>Update</Link></button></td>
                     <td><button type="button" onClick={ (someEvent) => handleDelete(someGuitar._id, guitarList)}>Delete</button></td>
                 </tr>
             </>
